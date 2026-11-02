@@ -1,3 +1,5 @@
+import os
+from pathlib import Path
 # 1. Turn off debug mode for safety on the internet
 DEBUG = False
 

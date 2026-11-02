@@ -7,7 +7,7 @@ from .models import DigitalProduct
 
 # 1. Frontend Homepage View
 def home_store(request):
-    products = DigitalProduct.objects.all()  # Fetches your products from the database
+    products = DigitalProduct.objects.all()  # Fetches your reseller/digital products
     return render(request, 'shop/home.html', {'products': products})
 
 # 2. Chapa Payment Gateway View
@@ -42,16 +42,14 @@ def initialize_payment(request, product_id):
     except Exception:
         pass
         
-    # Temporary fallback for local testing to see your success screen instantly
+    # Fallback template screen
     return render(request, 'shop/success.html', {'product': product})
 
 # 3. Secure File Delivery View
 def download_product_file(request, product_id):
     product = get_object_or_404(DigitalProduct, id=product_id)
-    file_path = product.digital_file.path
-    
-    if os.path.exists(file_path):
-        # Open the file securely and stream it straight to their browser window
+    if product.digital_file and os.path.exists(product.digital_file.path):
+        file_path = product.digital_file.path
         response = FileResponse(open(file_path, 'rb'), as_attachment=True)
         response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
         return response

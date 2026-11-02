@@ -106,7 +106,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# 4. Add this static root directory setting at the very bottom
+# Static root directory setting for production
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
